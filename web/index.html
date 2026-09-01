@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>RitualPredict — China Rain × BTC</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@import "tailwindcss" source(none);
+:root{
+  --ink: oklch(0.163 0.011 259);
+  --surface: oklch(0.219 0.012 262);
+  --surface-raised: oklch(0.264 0.013 263);
+  --hairline: oklch(0.332 0.014 264);
+  --paper: oklch(0.947 0.004 258);
+  --paper-dim: oklch(0.657 0.017 262);
+  --flare: oklch(0.784 0.137 71);
+  --tide: oklch(0.554 0.163 24);
+  --signal: oklch(0.607 0.184 265);
+}
+*{border-color:var(--hairline)}
+html,body{background:var(--ink);color:var(--paper);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.display{font-family:"Barlow Condensed",sans-serif;letter-spacing:-0.01em;line-height:1.02}
+.num{font-family:"Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-0.01em;line-height:.92}
+.card{background:var(--surface);border:1px solid var(--hairline);border-radius:14px}
+.card-raised{background:var(--surface-raised);border:1px solid var(--hairline);border-radius:10px}
+.badge{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding:4px 8px;border-radius:999px;border:1px solid var(--hairline)}
+.live{width:7px;height:7px;border-radius:99px;background:var(--flare);box-shadow:0 0 8px var(--flare);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+input[type=range]{accent-color:var(--signal)}
+</style>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen">
+<header class="sticky top-0 z-10 backdrop-blur bg-[var(--ink)]/90 border-b border-[var(--hairline)]">
+  <div class="max-w-[1120px] mx-auto px-4 sm:px-6 h-[52px] flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-7 h-7 rounded bg-[var(--signal)] grid place-items-center font-bold text-xs">RP</div>
+      <span class="display text-[18px] tracking-tight">RITUAL PREDICT</span>
+      <span class="hidden sm:inline-flex badge bg-[var(--surface-raised)] text-[var(--paper-dim)]">CHINA RAIN × BTC · BOOTCAMP 2</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="hidden sm:inline text-xs text-[var(--paper-dim)]">Ritual Chain 1979</span>
+      <span class="inline-flex items-center gap-1.5 badge bg-[var(--surface)]"><span class="live"></span> TESTNET DOWN — LOCAL EDR</span>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-[1120px] mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <div class="flex flex-wrap items-baseline gap-3 mb-5">
+    <h1 class="display text-[34px] sm:text-[48px] leading-none">Will it rain in China?</h1>
+    <span class="text-[var(--paper-dim)] text-sm">Beijing · rain_mm &gt; 10 · GTE · closes block <span class="num text-[var(--paper)]">~</span> <span id="closeBlock" class="num">—</span></span>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[1.35fr_.75fr] gap-4 sm:gap-6">
+    <!-- left: market -->
+    <div class="card p-4 sm:p-5">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <span class="badge bg-[var(--flare)] text-black border-transparent">YES · FLARE</span>
+          <span class="badge bg-[var(--tide)] text-white border-transparent">NO · TIDE</span>
+        </div>
+        <span class="text-xs text-[var(--paper-dim)]">Market #0 · Open</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="card-raised p-3 sm:p-4">
+          <div class="text-[11px] tracking-widest text-[var(--paper-dim)] mb-1">TOTAL YES</div>
+          <div class="num text-[28px]">100.00 <span class="text-sm text-[var(--paper-dim)]">RITUAL</span></div>
+          <div class="mt-2 h-1.5 rounded bg-[var(--ink)] overflow-hidden"><div class="h-full bg-[var(--flare)]" style="width:50%"></div></div>
+        </div>
+        <div class="card-raised p-3 sm:p-4">
+          <div class="text-[11px] tracking-widest text-[var(--paper-dim)] mb-1">TOTAL NO</div>
+          <div class="num text-[28px]">100.00 <span class="text-sm text-[var(--paper-dim)]">RITUAL</span></div>
+          <div class="mt-2 h-1.5 rounded bg-[var(--ink)] overflow-hidden"><div class="h-full bg-[var(--tide)]" style="width:50%"></div></div>
+        </div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-3 gap-3 text-xs">
+        <div class="card-raised p-3">
+          <div class="text-[var(--paper-dim)]">ORACLE</div>
+          <div class="truncate text-[var(--paper)]">api.weather.example/rain</div>
+          <div class="text-[var(--paper-dim)] truncate">jq .rain_mm</div>
+        </div>
+        <div class="card-raised p-3">
+          <div class="text-[var(--paper-dim)]">TARGET</div>
+          <div class="num text-lg">10 <span class="text-xs">mm</span></div>
+          <div class="text-[var(--paper-dim)]">GTE</div>
+        </div>
+        <div class="card-raised p-3">
+          <div class="text-[var(--paper-dim)]">OBSERVED</div>
+          <div id="observed" class="num text-lg">15 <span class="text-xs text-emerald-400">YES wins</span></div>
+          <div class="text-[var(--paper-dim)]">mocked local</div>
+        </div>
+      </div>
+
+      <div class="mt-4 flex gap-2">
+        <button class="flex-1 h-10 rounded bg-[var(--flare)] text-black font-semibold">Bet YES</button>
+        <button class="flex-1 h-10 rounded bg-[var(--tide)] text-white font-semibold">Bet NO</button>
+      </div>
+      <p class="mt-2 text-xs text-[var(--paper-dim)]">Pull-based: <code class="text-[var(--paper)]">payout = stake * totalPool / winningPool</code> — no loops. Scheduler <code>schedule(3, 200 blocks)</code> wakes <code>onScheduledResolve</code> at <code>resolveBlock</code>.</p>
+    </div>
+
+    <!-- right: BTC-adjusted -->
+    <div class="card p-4 sm:p-5 border-[var(--signal)]/40">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="display text-[18px]">BTC-ADJUSTED PAYOUT</h2>
+        <span class="badge bg-[var(--signal)] text-white border-transparent">CREATIVITY ANGLE</span>
+      </div>
+      <p class="text-sm text-[var(--paper-dim)] leading-relaxed">Our extension: second oracle tracks BTC. If you win, your pull is scaled by BTC movement between creation and resolve — so a market “held by BTC” pays in real purchasing power.</p>
+
+      <div class="mt-4 card-raised p-4">
+        <div class="flex justify-between text-xs text-[var(--paper-dim)]"><span>BTC AT CREATION</span><span>BTC AT RESOLVE</span></div>
+        <div class="flex items-baseline justify-between mt-1">
+          <div class="num text-2xl">$<span id="btcC">100000</span></div>
+          <div class="text-[var(--paper-dim)]">→</div>
+          <div class="num text-2xl">$<span id="btcR">80000</span></div>
+        </div>
+        <input id="btcRange" type="range" min="60000" max="140000" step="1000" value="80000" class="w-full mt-3"/>
+        <div class="flex justify-between text-[10px] text-[var(--paper-dim)]"><span>60k</span><span>140k</span></div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-3 gap-3">
+        <div class="card-raised p-3 text-center">
+          <div class="text-[10px] tracking-widest text-[var(--paper-dim)]">YOUR STAKE</div>
+          <div class="num text-xl">100</div>
+        </div>
+        <div class="card-raised p-3 text-center">
+          <div class="text-[10px] tracking-widest text-[var(--paper-dim)]">BASE PAYOUT</div>
+          <div class="num text-xl">200</div>
+          <div class="text-[10px] text-[var(--paper-dim)]">100 * 200 / 100</div>
+        </div>
+        <div class="card-raised p-3 text-center border-[var(--signal)]">
+          <div class="text-[10px] tracking-widest text-[var(--paper-dim)]">ADJUSTED</div>
+          <div id="adjusted" class="num text-xl text-[var(--signal)]">160</div>
+          <div id="adjustedSub" class="text-[10px] text-[var(--paper-dim)]">200 × 80k/100k</div>
+        </div>
+      </div>
+
+      <div class="mt-3 text-xs leading-relaxed text-[var(--paper-dim)]">
+        Formula in <code class="text-[var(--paper)]">_payout()</code>: <code class="text-[var(--paper)]">base * btcResolve / btcCreation</code> when both set. If BTC oracle not configured, falls back to base (no adjustment). Your example: 100 → 200 at 100k → <span id="exampleOut" class="text-[var(--paper)]">160</span> at 80k.
+      </div>
+
+      <div class="mt-4 flex gap-2">
+        <div class="flex-1 h-9 grid place-items-center rounded bg-[var(--surface-raised)] text-xs">Creation oracle: coingecko .bitcoin.usd</div>
+        <div class="w-9 h-9 grid place-items-center rounded bg-[var(--ink)] border border-[var(--hairline)]">₿</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 card p-4 sm:p-6">
+    <h3 class="display text-xl mb-2">How it self-resolves on Ritual</h3>
+    <div class="grid sm:grid-cols-3 gap-3 text-sm">
+      <div class="card-raised p-3"><div class="text-[var(--paper-dim)] text-xs">1 · SCHEDULE</div><div class="mt-1"><code>createMarket</code> books <code>MAX_ATTEMPTS=3</code> at <code>resolveBlock</code> via <code>IScheduler.schedule(…, 200 blocks)</code>. No cron.</div></div>
+      <div class="card-raised p-3"><div class="text-[var(--paper-dim)] text-xs">2 · WAKE</div><div class="mt-1">Scheduler calls <code>onScheduledResolve(executionIndex, marketId)</code>. Picks TEE executor via <code>pickServiceByCapability(HTTP_CALL)</code>.</div></div>
+      <div class="card-raised p-3"><div class="text-[var(--paper-dim)] text-xs">3 · HTTP → JQ → COMPARE</div><div class="mt-1"><code>0x0801 GET oracleUrl</code> → <code>0x0803 jq jsonPath</code> → <code>_compare(observed, target)</code> → <code>Resolved(YES/NO)</code> or retry. Second HTTP for BTC.</div></div>
+    </div>
+    <p class="mt-3 text-xs text-[var(--paper-dim)]">Local Hardhat mocks precompiles + Scheduler with <code>__mockObservedValue</code> / <code>__mockBtcPrice</code> so tests run while testnet is down. Real chain uses TEE + HTTP/JQ precompiles.</p>
+  </div>
+
+  <footer class="mt-6 text-center text-xs text-[var(--paper-dim)]">Built for Bootcamp 2 · Jr-kenny/ritual-chain-workshop-2 · fork verified · 3 Hardhat tests passing · local EDR</footer>
+</main>
+<script>
+const c=100000;
+const rng=document.getElementById('btcRange'),rv=document.getElementById('btcR'),ad=document.getElementById('adjusted'),ads=document.getElementById('adjustedSub'),ex=document.getElementById('exampleOut');
+function upd(){const r=parseInt(rng.value,10);rv.textContent=r.toLocaleString();const base=200,adj=Math.floor(base*r/c);ad.textContent=adj;ads.textContent=`200 × ${r.toLocaleString()}/100,000`;ex.textContent=adj;ad.style.color= r<c ? 'var(--tide)' : r>c ? 'var(--flare)' : 'var(--signal)';}
+rng.addEventListener('input',upd);upd();
+document.getElementById('closeBlock').textContent=(BigInt(Date.now())%10000n+200n).toString();
+</script>
+</body>
+</html>
