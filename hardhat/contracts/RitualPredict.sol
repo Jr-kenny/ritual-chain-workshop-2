@@ -586,7 +586,7 @@ contract RitualPredict {
         uint64 resolveBlock
     ) private returns (uint256 callId) {
         bytes memory data = abi.encodeWithSelector(this.onScheduledResolve.selector, uint256(0), marketId);
-        uint32 startBlock = resolveBlock;
+        uint32 startBlock = uint32(resolveBlock);
         if (RitualChain.SCHEDULER.code.length == 0) return 1;
         try IScheduler(RitualChain.SCHEDULER).schedule(
             data,
